@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  producer:
+    build:
+      context: .
+      target: producer
+      args: 
+        DISTNAME: winamd64/python:3.8-windowsservercore
+    environment:
+      #ZMQ_ADDR: ipc:///c:/tmp/test.pipe
+      ZMQ_ADDR: tcp://0.0.0.0:30000
+      PYTHONUNBUFFERED: 1
+      BYTESIZE: 10000000
+      MESSAGES: 100
+    volumes:
+      - ipc-volume:c:/tmp
+  consumer:
+    build:
+      context: .
+      target: consumer
+      args: 
+        DISTNAME: winamd64/python:3.8-windowsservercore
+    depends_on: 
+      - producer
+    environment:
+      #ZMQ_ADDR: ipc:///c:/tmp/test.pipe
+      ZMQ_ADDR: tcp://producer:30000
+      PYTHONUNBUFFERED: 1
+    volumes:
+      - ipc-volume:c:/tmp
+  
+volumes:
+  ipc-volume:
