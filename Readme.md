@@ -7,7 +7,7 @@ This minimal working example benchmarks throughput metrics for ZMQ running bare-
 ## Method
 The example code consists of single producer/consumer node interacting via `PUSH/PULL` sockets. The producer sends *N* pre-allocated messages each of size *B*. Each message contains a large byte array `np.array` and a wallclock timestamp of the sender. The consumer awaits *N* messages and performs minimal bookkeeping. `pickle` is used for serialization.
 
-After the last message is consumed, it a) computes the time elapsed *E* as the difference of the current consumer wallclock time and the message timestamp of the first message received and b) the sum of all bytes received *B*. The throughput is then computed as `B/E`.
+After the last message is consumed, the consumer a) computes the time elapsed *E* as the difference of the current consumer wallclock time and the message timestamp of the first message received and b) the sum of all bytes received *B*. The throughput is then computed as `B/E`.
 
 The example may be run directly on the host OS or virtualized in docker. When run in bare OS, two processes are spawned. When run in Docker, two separate containers are used.
 
