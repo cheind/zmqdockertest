@@ -17,8 +17,6 @@ services:
     build:
       context: .
       target: consumer
-      args: 
-        DIST: winamd64/python:3.8-windowsservercore
     depends_on: 
       - producer
     environment:
